@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Server:</strong>
+  <%= @command.server %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @command.description %>
+</p>
+
+<p>
+  <strong>Command:</strong>
+  <%= @command.command %>
+</p>
+
+<%= link_to 'Edit', edit_command_path(@command) %> |
+<%= link_to 'Back', commands_path %>
