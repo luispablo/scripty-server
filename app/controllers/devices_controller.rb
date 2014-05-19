@@ -4,14 +4,6 @@ class DevicesController < ApplicationController
   # PUT /devices/1/validate.json
   def validate
     @device = Device.find(params[:id])
-
-    respond_to do |format|
-      if @device.check_email(params[:key])
-        format.json { render :show, status: :created, location: @device }
-      else
-        format.json { render json: @device.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # GET /devices
@@ -41,6 +33,8 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save!
+        UserMailer.validate_device(@device).deliver
+        
         format.html { redirect_to @device, notice: 'Device was successfully created.' }
         format.json { render :show, status: :created, location: @device }
       else

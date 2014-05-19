@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to Scripty!</h1>
+    <p>
+      If you have requested to validate a new device with this e-mail, 
+      then please click the link below:
+      <%= link_to 'Validate this device', "#{devices_url}/#{@device.id}/validate/#{@device.key}" %>
+    </p>
+    <p>
+      If you haven't installed Scripty and requested a device validation,
+      you can either ignore this e-mail, or maybe go and try Script!
+    </p>
+  </body>
+</html>
