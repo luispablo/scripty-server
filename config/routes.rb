@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :devices
+    resources :servers
     collection do 
       post :find
     end
