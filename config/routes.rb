@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :commands
 
-  resources :servers
+  resources :servers do
+    resources :commands
+  end
 
   resources :devices 
   get '/devices/:id/validate/:key' => 'devices#validate'
