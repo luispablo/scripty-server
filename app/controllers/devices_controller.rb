@@ -1,10 +1,16 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: [:show, :edit, :update, :destroy]
+  before_action :set_device, only: [:show, :edit, :update, :destroy, :validate]
 
   # PUT /devices/1/validate.json
   def validate
-    @device = Device.find(params[:id])
-  end
+      respond_to do |format|
+        if @device.check_email(params[:key])
+          format.html
+        else
+          format.html { render :validate, status: 500 }
+        end
+      end
+   end
 
   # GET /devices
   # GET /devices.json
