@@ -12,6 +12,9 @@
 class User < ActiveRecord::Base
 	after_validation :defaults
 
+	has_many :servers
+	has_many :commands, through: :servers
+
   	def defaults
   		self.email_checked = false if self.email_checked.nil?
   	end

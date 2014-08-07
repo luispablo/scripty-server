@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :devices
     resources :servers
+    get :commands, on: :member
     collection do 
       post :find
     end
