@@ -6,6 +6,7 @@ class DevicesController < ApplicationController
       respond_to do |format|
         if @device.check_email(params[:key])
           format.html
+          format.json { render :show, status: :created, location: @device }
         else
           format.html { render :validate, status: 500 }
         end
