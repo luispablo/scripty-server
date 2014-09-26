@@ -99,8 +99,8 @@ production:
     -
       # Filename containing Symmetric Encryption Key encrypted using the
       # RSA public key derived from the private key above
-      key_filename: /home/luispablo/rails/keys/scripty_server_production.key
-      iv_filename:  /home/luispablo/rails/keys/scripty_server_production.iv
+      key_filename: /opt/apps/scripty-server/scripty_server_production.key
+      iv_filename:  /opt/apps/scripty-server/scripty_server_production.iv
       cipher_name:  aes-256-cbc
       # Base64 encode encrypted data without newlines
       encoding:     :base64strict
