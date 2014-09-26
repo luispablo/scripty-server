@@ -1,0 +1,107 @@
+#
+# Symmetric Encryption for Ruby
+#
+---
+# For the development and test environments the test symmetric encryption keys
+# can be placed directly in the source code.
+# And therefore no RSA private key is required
+development:   &development_defaults
+  key:         1234567890ABCDEF1234567890ABCDEF
+  iv:          1234567890ABCDEF
+  cipher_name: aes-128-cbc
+  encoding:    :base64strict
+
+test:
+  <<: *development_defaults
+
+release:
+  # Since the key to encrypt and decrypt with must NOT be stored along with the
+  # source code, we only hold a RSA key that is used to unlock the file
+  # containing the actual symmetric encryption key
+  private_rsa_key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpAIBAAKCAQEA2LOdjyWweYyKcu3bU35oudwsy16Q1p8MnaRZFwV4vQN+50W6
+    yYBJhT6Q5mjsT6LgbggUt/j+kwH17t71c19bxOB5jLcjXwZxj7k7ZwTpisdUDyWA
+    eBoG4B+t9nwDc7sXtyGlyCmQhWUsaHUt36T0CGQPVyz4zopN5CkVm0oHUNth4rHP
+    jYJtGCczp038Y0TLy95BM5Edih/Il7ROp4C1ikdLcUFPjpbvhdNTHbB6jU46zwzr
+    30XfpRIFUjIeSntqQ2hmNtx5qrnLXlXBodIhlAiX6u+wZo0lZOl5pOARrjqexAyi
+    FIM4UWOEZCXda82aAY6NOm/vy0Nw3CQEt5HpLQIDAQABAoIBAF/C1/CnJhpAmfn5
+    1H9MEDl5662fR4AgXvHW66u5tkZIoi7PaKCc+WBRarT3Tt5OSsE0/vrhpJYQOr7p
+    diwayrHwxKYDVDUs4sgxgeefixjRxvq+hswMLFekiDqxSNE+r1c1Hk6a14urTvmG
+    NtRqz5BZr1HFxNl40rztzueFyj/XMdxmrRK3mDXXGgsVW2o1fhs1EeYRoZtyUdqQ
+    a5+zHAtP0mNCNiJowbHxztKgxauGrFRAP9HsGd4oABAC6S0m/ljQTbnXYGILZqUX
+    fOUHCA4layQF0M3J5+WQvnVck+g4GmdPeXK2uSEf6UaAHBqT5k7w7mRvihNf7YKN
+    +WZde6ECgYEA/mGCpssHLa9RjP0GJKHB0GNMF1QQaA1jOv0Z+N1RiRZT1FrsKEmW
+    SVvSpGVCA0VfngzaST+ud7XI1ITTH1V6HzlnT4DDM+semo01qVbnvVKJ/vbw22RD
+    MYlMuQGDI5kx28Abju/F5p86Vkpw7GzFJJl11SZigVrOBu3jmS6BVCkCgYEA2hS1
+    1U/EA89X24YJBmxe40C62clETYaIBHpqef7FzPBOUehe8/ErgH4tMPmeC9NhbfaM
+    g68I4VMulPZTGKlkBExo0vJWvXv37ai4De2f20BS0mWeUL0RzFUYrEDdS2J1hqfj
+    dI2HrHqK41ml7Tc3eg6+uvKql7zyU05irqjMrWUCgYEAuhIVgW/NJmuxWVHTZoQz
+    wvx/Mik5fwMb7JAqqVEqTP5Z/2EqkSWSmsJhyAKRUNcz4+Y+3YmJUuNTrbAixi6+
+    D4zrtsnW/2kij6Zu9BkvldqEOk3jTHeAdwGZb1Jd3HI4eCeDgQB+X/1krK3y/91o
+    LydZe7qCH2COh58G9ot/6lECgYAge+lB5unJr37kwihh/o57x06N1j8IVTu5fwqR
+    NXP9POZNqRFLwOa78w+ENgpmtIvUt17i1pW6CovrwG1MRR8SzNboZRSqkOazTehs
+    mrKvE/vCP0S/vgoCp8JPFjJgYkAjWKq218YX2QELMHVYylrHIZ8jdbYXeBuYcRqd
+    7aLfSQKBgQCpmfA7xaE67VTGPjT4uRCuCacYLs5tA4UFKbkS9Gxt8H3FDmXlNyes
+    tEwSy5Fwx0akG+rPbIwaWxuptqj15S4wzvSs5IRrYVptESObzLVpIumfwb4yu0s0
+    53n9hD7KxNd0dqwDoB5beSzfCc/r7e0wE1pkimh0AXjB0LudLgkr6Q==
+    -----END RSA PRIVATE KEY-----
+
+
+  # List Symmetric Key files in the order of current / latest first
+  ciphers:
+    -
+      # Filename containing Symmetric Encryption Key encrypted using the
+      # RSA public key derived from the private key above
+      key_filename: /home/luispablo/rails/keys/scripty_server_release.key
+      iv_filename:  /home/luispablo/rails/keys/scripty_server_release.iv
+      cipher_name:  aes-256-cbc
+      # Base64 encode encrypted data without newlines
+      encoding:     :base64strict
+      version:      1
+
+production:
+  # Since the key to encrypt and decrypt with must NOT be stored along with the
+  # source code, we only hold a RSA key that is used to unlock the file
+  # containing the actual symmetric encryption key
+  private_rsa_key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpQIBAAKCAQEA71N96j3K9GL52O8/VDzXv4biQD/bi3qAnbD/IP7JAUsDPFIM
+    x48RE5uTgr2cSWAM0RVYlPVWuPxbP8Z0zRLIvfgdYaAvGGcRb/gj3QqUTfvcbON7
+    K010jGg8CAsKC0BejIJPx+76udaF5WZvpZf0DxMg8/PoKc5J21lPCqU6CJHvVhEJ
+    9tbyRwshTtc1TTQrR3Q2tU3cYrlyH9kqkEoTOP3nngASy/HpDrNP5lICn6s0WTSo
+    BZr1sY7YVKKXPngAqCAORiEyUCGt8BnEEAC5wzgTPCwDS0wiEA83DFDrxwKtl8W0
+    xUjghm0wA3nFzKIvayB80K4aIn6YNk5gRQhuUwIDAQABAoIBAQDlL2ddcl9xOXda
+    L4LOAJX7bAguzvhH0cBpQp6P0m5bNqKamVhzoqYPyOSyRzHrcnfTokV6IJgz/jbE
+    FCC2Yk6q3XgFjYiMLeec+lwdyYvMQm0MOawyA7Kg4xDaAvhTXgktNX2BUXH5lV4U
+    GMzCH4oxBXiBJgomPs6rqBLxdtjkakIeQJR6zjgjY0iKfTY0kTufLfCOh+vORvYg
+    JLiWPBYLWLF7sYxoHys9F2iBmwpUME02/WHXS0IQeGXS40OmzpDvAcrSg34fkTBJ
+    3X9bw5oCi45amyNITbm+uvlhEMBKuOpsAZgBZbMwdpzzzXVbkd0ebSZZQyWE+3YP
+    TysL+QVBAoGBAP+c7rqc3UC4g5He4DY2WPyQKFu3BERpSEHghtcvEUxPbKyo9yCI
+    6MvoEKNQuHjlUiRUGKSsOf4ykxNY+eLvJnSzT1geoNKj4FV6VXcpuNtkeusLoWtL
+    vvG8LX+jI7aM+QMNfE/ywjYqDX/DnPi4MCjSQWX11uKl2S7wSo9cEmddAoGBAO+w
+    Pz5eb1p8w31eQTMIVk2d96H3bsjuG4LHKHSetupzgkwzpNSG7cEcUBd7xe83pR9k
+    g/nd4Ka3S/QwQfvlhAekdqv0mh4zOZy/MsnHK42MLEQhXH40aWICJruzqtYnoNSV
+    RHMzdAOFBrX7nl7xG5zeEz+vLDIzL9uB+L5+G0FvAoGADdOWUj/T9AFHFKfipuwP
+    qjG+DR/8Ohsbznxvrsob/G27aieFnpvpQ8ZcyAjAwcFdzRtDbfzm8ioYLI6+jZj0
+    EpH0c8bMWjiFFPqWDukR18Q6peYuKBijzn2oVGQltWUwvwqGs+hkuvtRWZziK84C
+    xOKCqRpAMmhYNCLJVbHcSP0CgYEAud8NTEpjQ+KYnrHnEbIXax1jGYENslejkejr
+    oHQsGOf2VS1/VyhDW4ufOHbNadLXA98o0S2UtvRRvE1n/fVgS6ToOjT3BxBmTv2e
+    XwdK6PuYoETWuy/dwRk1/D0579TPTctrR4LRJqGUMK+tgqaq6Rz2BF7NgShcpnbF
+    9MNKU5UCgYEAqBRlTSuyD/AFomzywjSqm63a9c8hDOi3toevilj+hOrljNeDfcGs
+    dd610yBKS/Lj3XjO2PIqql5VNSbTzrn5QN/h0dr/8N5lyNGQ/UKbUCz8Ly4K4e9K
+    SbWaGCTqXL1KKi75UQ5W/flTxhfOsahU36OLDR3oLvBRRhlPT+fpM5A=
+    -----END RSA PRIVATE KEY-----
+
+
+  # List Symmetric Key files in the order of current / latest first
+  ciphers:
+    -
+      # Filename containing Symmetric Encryption Key encrypted using the
+      # RSA public key derived from the private key above
+      key_filename: /home/luispablo/rails/keys/scripty_server_production.key
+      iv_filename:  /home/luispablo/rails/keys/scripty_server_production.iv
+      cipher_name:  aes-256-cbc
+      # Base64 encode encrypted data without newlines
+      encoding:     :base64strict
+      version:      1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140510201448) do
+ActiveRecord::Schema.define(version: 20140924000145) do
 
   create_table "commands", force: true do |t|
     t.integer  "server_id"
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20140510201448) do
     t.string   "address"
     t.integer  "port"
     t.string   "username"
-    t.string   "password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "encrypted_password"
   end
 
   add_index "servers", ["user_id"], name: "index_servers_on_user_id"

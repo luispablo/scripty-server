@@ -28,6 +28,7 @@ gem 'spring',        group: :development
 
 gem 'mysql2'
 gem 'thin'
+gem 'symmetric-encryption'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

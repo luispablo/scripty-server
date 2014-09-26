@@ -14,6 +14,8 @@
 #
 
 class Server < ActiveRecord::Base
+	attr_encrypted :password
+	
 	belongs_to :user
 	has_many :commands
 end
